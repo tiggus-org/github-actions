@@ -40,8 +40,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           from_step: 0
-          to_step: 1
-          branch_name: main
+          to_step: 0
+          branch_name: introduction
 
 
 # name: step1 create a branch
