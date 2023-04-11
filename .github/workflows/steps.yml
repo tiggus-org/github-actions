@@ -77,7 +77,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           from_step: 1
           to_step: 2
-          branch_name: module1
+          branch_name: introduction
 
 # name: step2 Commit a file
 
