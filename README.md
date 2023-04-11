@@ -23,14 +23,14 @@ fetch-depth: 0 # get all the branches
 
 
 
-<details id=0 open>
+<details id=0>
 <summary><h2>id0</h2></summary>
 
 id0
 
 </details>
 
-<details id=1>
+<details id=1 open>
 <summary><h2>id1</h2></summary>
 
 id1
