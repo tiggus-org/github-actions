@@ -1,4 +1,4 @@
-name: Step 1, Create a branch
+name: step1 create a branch
 
 # This step listens for the learner to create branch `my-first-branch`
 # This step sets STEP to 2
@@ -46,7 +46,7 @@ jobs:
       ${{ !github.event.repository.is_template
           && needs.get_current_step.outputs.current_step == 1
           && github.ref_type == 'branch'
-          && github.ref_name == 'my-first-branch' }}
+          && github.ref_name == 'module1' }}
     # We'll run Ubuntu for performance instead of Mac or Windows
     runs-on: ubuntu-latest
 
@@ -65,4 +65,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           from_step: 1
           to_step: 2
-          branch_name: step1
+          branch_name: module1
