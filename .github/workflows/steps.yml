@@ -46,6 +46,7 @@ jobs:
 
   get_current_step1:
     name: Check current step number
+    needs: get_current_step
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
