@@ -1,4 +1,4 @@
-name: Step 1, Create a branch
+name: step1 create a branch
 
 # This step listens for the learner to create branch `my-first-branch`
 # This step sets STEP to 2
