@@ -44,7 +44,7 @@ jobs:
           to_step: 1
           branch_name: introduction
 
-  get_current_step:
+  get_current_step1:
     name: Check current step number
     runs-on: ubuntu-latest
     steps:
