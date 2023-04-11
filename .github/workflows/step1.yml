@@ -46,7 +46,7 @@ jobs:
       ${{ !github.event.repository.is_template
           && needs.get_current_step.outputs.current_step == 1
           && github.ref_type == 'branch'
-          && github.ref_name == 'module1' }}
+          && github.ref_name == 'step1' }}
     # We'll run Ubuntu for performance instead of Mac or Windows
     runs-on: ubuntu-latest
 
