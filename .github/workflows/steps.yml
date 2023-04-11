@@ -63,9 +63,8 @@ jobs:
     needs: get_current_step1
     if: >-
       ${{ !github.event.repository.is_template
-          && needs.get_current_step.outputs.current_step == 1
-          && github.ref_type == 'branch'
-          && github.ref_name == 'step1' }}
+          && needs.get_current_step1.outputs.current_step == 1
+          && github.ref_type == 'branch' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
