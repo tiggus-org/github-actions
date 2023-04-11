@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - step1
+      - module1
 
 # Reference https://docs.github.com/en/actions/security-guides/automatic-token-authentication
 permissions:
