@@ -83,30 +83,32 @@ jobs:
 
   get_current_step2:
     name: check current step number
+    needs: get_current_step1
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - id: get_step
+      - id: get_step2
         run: |
           echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
+          echo "current_step=$(cat ./.github/script/STEP)"
     outputs:
-      current_step: ${{ steps.get_step.outputs.current_step }}
+      current_step: ${{ steps.get_step2.outputs.current_step }}
 
   on_commit_a_file:
     name: on commit a file
-    needs: get_current_step
+    needs: get_current_step2
     if: >-
       ${{ !github.event.repository.is_template
-          && needs.get_current_step.outputs.current_step == 2 }}
+          && needs.get_current_step2.outputs.current_step == 2 }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Update to step 3
-        uses: skills/action-update-step@v1
+      - name: update to step 3
+        uses: tiggus/action-update-step@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           from_step: 2
