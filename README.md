@@ -37,14 +37,14 @@ id1
 
 </details>
 
-<details id=2 open>
+<details id=2>
 <summary><h2>id2</h2></summary>
 
 id2
 
 </details>
 
-<details id=3>
+<details id=3 open>
 <summary><h2>id3</h2></summary>
 
 id3
