@@ -55,7 +55,7 @@ id3
 
 </details>
 
-<details id=4>
+<details id=4 open>
 <summary><h2>id4</h2></summary>
 
 id4
