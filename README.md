@@ -19,6 +19,10 @@ https://docs.github.com/en/actions/learn-github-actions/expressions
 
 fetch-depth: 0 # get all the branches
 
+https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+https://docs.github.com/en/actions/learn-github-actions/contexts
+https://docs.github.com/en/actions/learn-github-actions/expressions
+
 </details>
 
 
