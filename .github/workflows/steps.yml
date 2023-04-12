@@ -8,7 +8,11 @@ on:
       - step2
   create:
     branches: 
-     - step2
+      - step2
+  pull_request:
+    types:
+      - opened
+      - reopened
 
 permissions:
   contents: write
@@ -115,3 +119,38 @@ jobs:
           from_step: 2
           to_step: 3
           branch_name: step2
+
+  get_current_step3:
+    name: check current step number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: get_step3
+        run: |
+          echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
+          echo "current_step=$(cat ./.github/script/STEP)"
+    outputs:
+      current_step: ${{ steps.get_step3.outputs.current_step }}
+
+  on_open_a_pull_request:
+    name: on open a pull request
+    needs: get_current_step3
+    if: >-
+      ${{ !github.event.repository.is_template
+          && needs.get_current_step.outputs.current_step == 3
+          && github.head_ref == 'step3' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
+          ref: step3 # important, as normally pull_request event won't grab other branches
+      - name: Update to step 4
+        uses: skills/action-update-step@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          from_step: 3
+          to_step: 4
+          branch_name: step3
