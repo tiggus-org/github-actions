@@ -5,8 +5,9 @@ on:
   push:
     branches:
       - main
-      - step2
   create:
+    branches: 
+     - step2
 
 permissions:
   contents: write
@@ -78,7 +79,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           from_step: 1
           to_step: 2
-          branch_name: introduction
+          branch_name: step2
 
   get_current_step2:
     name: check current step number
