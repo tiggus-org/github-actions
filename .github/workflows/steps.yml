@@ -139,7 +139,7 @@ jobs:
     if: >-
       ${{ !github.event.repository.is_template
           && needs.get_current_step3.outputs.current_step == 3
-          && github.head_ref == 'main' }}
+          && github.head_ref == 'step3' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
