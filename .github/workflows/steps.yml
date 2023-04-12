@@ -5,7 +5,14 @@ on:
   push:
     branches:
       - main
+      - step2
   create:
+    branches: 
+      - step2
+  pull_request:
+    types:
+      - opened
+      - reopened
 
 permissions:
   contents: write
@@ -45,7 +52,7 @@ jobs:
           branch_name: introduction
 
   get_current_step1:
-    name: Check current step number
+    name: check current step number
     needs: get_current_step
     runs-on: ubuntu-latest
     steps:
@@ -59,13 +66,12 @@ jobs:
       current_step: ${{ steps.get_step1.outputs.current_step }}
 
   on_create_a_branch:
-    name: On create a branch
+    name: on create a branch
     needs: get_current_step1
     if: >-
       ${{ !github.event.repository.is_template
-          && needs.get_current_step.outputs.current_step == 1
-          && github.ref_type == 'branch'
-          && github.ref_name == 'step1' }}
+          && needs.get_current_step1.outputs.current_step == 1
+          && github.ref_type == 'branch' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -73,77 +79,78 @@ jobs:
         with:
           fetch-depth: 0
       - name: Update to step 2
-        uses: skills/action-update-step@v1
+        uses: tiggus/action-update-step@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           from_step: 1
           to_step: 2
-          branch_name: introduction
+          branch_name: step2
 
-# name: step2 Commit a file
+  get_current_step2:
+    name: check current step number
+    needs: get_current_step1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: get_step2
+        run: |
+          echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
+          echo "current_step=$(cat ./.github/script/STEP)"
+    outputs:
+      current_step: ${{ steps.get_step2.outputs.current_step }}
 
-# # This step listens for the learner to commit a file to branch `my-first-branch`
-# # This step sets STEP to 3
-# # This step closes <details id=2> and opens <details id=3>
+  on_commit_a_file:
+    name: on commit a file
+    needs: get_current_step2
+    if: >-
+      ${{ !github.event.repository.is_template
+          && needs.get_current_step2.outputs.current_step == 2 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: update to step 3
+        uses: tiggus/action-update-step@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          from_step: 2
+          to_step: 3
+          branch_name: step2
 
-# # This action will run every time there's a push to `my-first-branch`
-# # Reference https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
-# on:
-#   workflow_dispatch:
-#   push:
-#     branches:
-#       - module1
+  get_current_step3:
+    name: check current step number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: get_step3
+        run: |
+          echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
+          echo "current_step=$(cat ./.github/script/STEP)"
+    outputs:
+      current_step: ${{ steps.get_step3.outputs.current_step }}
 
-# # Reference https://docs.github.com/en/actions/security-guides/automatic-token-authentication
-# permissions:
-#   # Need `contents: read` to checkout the repository
-#   # Need `contents: write` to update the step metadata
-#   contents: write
-
-# jobs:
-#   # Get the current step from .github/script/STEP so we can
-#   # limit running the main job when the learner is on the same step.
-#   get_current_step:
-#     name: Check current step number
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-#       - id: get_step
-#         run: |
-#           echo "current_step=$(cat ./.github/script/STEP)" >> $GITHUB_OUTPUT
-#     outputs:
-#       current_step: ${{ steps.get_step.outputs.current_step }}
-
-#   on_commit_a_file:
-#     name: On commit a file
-#     needs: get_current_step
-
-#     # We will only run this action when:
-#     # 1. This repository isn't the template repository
-#     # 2. The STEP is currently 2
-#     # Reference https://docs.github.com/en/actions/learn-github-actions/contexts
-#     # Reference https://docs.github.com/en/actions/learn-github-actions/expressions
-#     if: >-
-#       ${{ !github.event.repository.is_template
-#           && needs.get_current_step.outputs.current_step == 2 }}
-
-#     # We'll run Ubuntu for performance instead of Mac or Windows
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       # We'll need to check out the repository so that we can edit the README
-#       - name: Checkout
-#         uses: actions/checkout@v3
-#         with:
-#           fetch-depth: 0 # Let's get all the branches
-
-#       # Update README to close <details id=2> and open <details id=3>
-#       # and set STEP to '3'
-#       - name: Update to step 3
-#         uses: skills/action-update-step@v1
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           from_step: 2
-#           to_step: 3
-#           branch_name: module1
+  on_open_a_pull_request:
+    name: on open a pull request
+    needs: get_current_step3
+    if: >-
+      ${{ !github.event.repository.is_template
+          && needs.get_current_step3.outputs.current_step == 3
+          && github.head_ref == 'step3' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
+          ref: step3 # important, as normally pull_request event won't grab other branches
+      - name: Update to step 4
+        uses: skills/action-update-step@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          from_step: 3
+          to_step: 4
+          branch_name: step3
