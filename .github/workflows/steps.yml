@@ -62,7 +62,7 @@ jobs:
       current_step: ${{ steps.get_step1.outputs.current_step }}
 
   on_create_a_branch:
-    name: On create a branch
+    name: on create a branch
     needs: get_current_step1
     if: >-
       ${{ !github.event.repository.is_template
