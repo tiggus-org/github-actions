@@ -181,9 +181,9 @@ jobs:
         with:
           fetch-depth: 0
       - name: Update to step X
-        uses: skills/action-update-step@v1
+        uses: tiggus/action-update-step@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           from_step: 4
           to_step: X
-          #branch_name: step4
+          branch_name: step4
