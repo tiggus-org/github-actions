@@ -51,14 +51,14 @@ id3
 
 </details>
 
-<details id=4 open>
+<details id=4>
 <summary><h2>id4</h2></summary>
 
 id4
 
 </details>
 
-<details id=X>
+<details id=X open>
 <summary><h2>end</h2></summary>
 
 end
