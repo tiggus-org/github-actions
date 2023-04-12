@@ -30,14 +30,14 @@ id0
 
 </details>
 
-<details id=1 open>
+<details id=1>
 <summary><h2>id1</h2></summary>
 
 id1
 
 </details>
 
-<details id=2>
+<details id=2 open>
 <summary><h2>id2</h2></summary>
 
 id2
